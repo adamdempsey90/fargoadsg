@@ -59,4 +59,7 @@ InitVariables()
   var("COOLING", COOLING, STRING, NO, "NO");
   var("COOLINGTIME0", &COOLINGTIME0, REAL, NO, "6.28");
   var("QOUT", &QOUT, REAL, NO, "2.0");
+  var("INITAMP", &INITAMP, REAL, NO, "0.0");
+  var("INITM", &INITM, REAL, NO, "0");
+
 }

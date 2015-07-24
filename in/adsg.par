@@ -11,6 +11,8 @@ AdiabaticIndex		2.0		Default value: 1.4
 Cooling			No		choose: Yes or No
 CoolingTime0		62.5		Cooling time at r=1
 Qout			2.0		Q at outer edge, only used for MKLIN
+InitAmp			0.00001		Amplitude of noise added to i.c
+Initm			1		Initial m of the noise, defaults to 0
 ### Planet parameters
 
 PlanetConfig		in/zero.cfg
@@ -37,7 +39,7 @@ RadialSpacing 		L		Zone interfaces evenly spaced
 
 ### Output control parameters
 
-Ntot			4000		Total number of time steps
-Ninterm	 		5		Time steps between outputs
+Ntot			75000		Total number of time steps
+Ninterm	 		75		Time steps between outputs
 DT			0.314159265359	Time step length. 2PI = 1 orbit
-OutputDir		out_mklin/
+OutputDir		out_mklin2/

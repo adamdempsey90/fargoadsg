@@ -188,6 +188,7 @@ real temp_func(r)
 #ifdef LAUGHLINPROF
    res =  0.74528*SIGMA0*FLARINGINDEX*pow(Sigma(r),FLARINGINDEX-1);
 #endif
+  return res;
 }
 
 real dlogtemp_func(r)
@@ -289,7 +290,7 @@ void AddUserIC (Rho, Vr, Vt, Energy)
 {
   int i, j, l, nr, ns;
   real *dens, *vr, *vt, *energy;
-  real lambdaWave, initAmp, infsig;
+  real lambdaWave, infsig;
   dens = Rho->Field;
   vr = Vr->Field;
   vt = Vt->Field;
@@ -298,13 +299,12 @@ void AddUserIC (Rho, Vr, Vt, Energy)
   ns = Rho->Nsec;
   lambdaWave = GlobalRmed[nr-1] - GlobalRmed[0];
   srand((unsigned int)time(NULL));
-  initAmp = .0001;
  // infsig = Sigma(GlobalRmed[GLOBALNRAD-1]);
   for (i = 0; i < nr; i++) {
     for (j = 0; j < ns; j++) {
       l = j+i*ns;
   //    dens[l] += infsig*initAmp*cos(2*M_PI*j/ns); // m=1 perturbation
-      dens[l] = dens[l]*(1 + initAmp * (2*(real)rand()/(real)(RAND_MAX) - 1)); // random noise
+      dens[l] = dens[l]*(1 + cos(INITM*2*M_PI*j/( (float)ns))*INITAMP * (2*(real)rand()/(real)(RAND_MAX) - 1)); // random noise
       if (dens[l] < 0)	printf("Error Sigma < 0, CPU: %d,\t(%g,%g,%g)\n",CPU_Rank,Rmed[i],2*M_PI*j/ns,dens[l]);
     }
   }

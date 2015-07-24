@@ -1,17 +1,32 @@
 #!/usr/bin/env python
 import os
 from sys import argv
+import multiprocessing
 import matplotlib
 matplotlib.use('Agg')
-def save_images(q,filelist,iso=True,dirname='./',fnamebase='image',imgext='.png'):
-	if dirname[-1] != '/':
-		dirname += '/'
-	totnum = len(filelist)
-	for i,j in enumerate(filelist):
-		fld = fargo(j,iso)
-		fname = dirname + fnamebase + '%03d'%i + imgext
-		print 'Saving image %d/%d to %s...\t %.2f%% done' % (i,totnum,fname,float(i)/float(totnum)*100)
-		fld.plot(q,output=True,fname=fname)
+
+class imgfile:
+	def __init__(self,q,num,fnum,dirname,iso,fnamebase,imgext):
+		self.fnum = fnum
+		self.num = num
+		self.fname = dirname + fnamebase + '%03d'%num + imgext
+		self.q = q
+		self.iso = iso
+
+
+def save_image(img):
+	fld = fargo(img.fnum,img.iso)
+	fld.plot(img.q,output=True,fname=img.fname)
+	print 'Done %d' % img.num
+#def save_images(q,filelist,iso=True,dirname='./',fnamebase='image',imgext='.png'):
+#	if dirname[-1] != '/':
+#		dirname += '/'
+#	totnum = len(filelist)
+#	for i,j in enumerate(filelist):
+#		fld = fargo(j,iso)
+#		fname = dirname + fnamebase + '%03d'%i + imgext
+#		print 'Saving image %d/%d to %s...\t %.2f%% done' % (i,totnum,fname,float(i)/float(totnum)*100)
+#		fld.plot(q,output=True,fname=fname)
 	
 
 
@@ -48,6 +63,20 @@ try:
 except:
 	pass
 
-save_images(q,filelist,dirname=imgdir,fnamebase=q,imgext=ext);
+if imgdir[-1] != '/':
+	imgdir += '/'
+
+imgs = [imgfile(q,i,j,imgdir,True,q,ext) for i,j in enumerate(filelist)]
+
+print vars(imgs[200])
+
+np = 20
+print 'Using %d processes' % np
+
+pool = multiprocessing.Pool(np)
+pool.map(save_image,imgs)
+
+#save_images(q,filelist,dirname=imgdir,fnamebase=q,imgext=ext);
+
 print 'Finished.'
 

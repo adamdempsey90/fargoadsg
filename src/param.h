@@ -61,3 +61,4 @@ extern	real	ADIABATICINDEX;
 extern	char	COOLING[512];
 extern	real	COOLINGTIME0;
 extern	real	QOUT;
+extern	real	INITAMP;
