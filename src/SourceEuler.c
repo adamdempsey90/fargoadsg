@@ -12,7 +12,7 @@ static PolarGrid *TemperInt;
 static PolarGrid *VradNew, *VradInt;
 static PolarGrid *VthetaNew, *VthetaInt;
 static PolarGrid *EnergyNew, *EnergyInt;
-static real timeCRASH;  
+static real timeCRASH;
 extern boolean Corotating;
 extern boolean Adiabatic;
 extern boolean SelfGravity, SGZeroMode;
@@ -36,13 +36,13 @@ boolean DetectCrash (array)
   for (i = 0; i < nr; i++) {
     for (j = 0; j < ns; j++) {
       l = j+i*ns;
-      if (ptr[l] < 0.0) 
+      if (ptr[l] < 0.0)
 	bool = YES;
     }
   }
   return bool;
 }
- 
+
 void FillPolar1DArrays ()
 {
   FILE *input, *output;
@@ -377,8 +377,8 @@ void SubStep2 (Rho, Energy, dt)
       dv = vrad[lip]-vrad[l];
       if (dv < 0.0)
         qr[l] = CVNR*CVNR*rho[l]*dv*dv;
-      else 
-        qr[l] = 0.0; 
+      else
+        qr[l] = 0.0;
       dv = vtheta[ljp]-vtheta[l];
       if (dv < 0.0)
         qt[l] = CVNR*CVNR*rho[l]*dv*dv;
@@ -427,7 +427,7 @@ void SubStep2 (Rho, Energy, dt)
     }
   }
 }
-	       
+
 void SubStep3 (Rho, dt)
      PolarGrid *Rho;
      real dt;
@@ -508,7 +508,7 @@ void SubStep3 (Rho, dt)
     }
   }
 }
-   		   
+
 int ConditionCFL (Vrad, Vtheta, deltaT)
      PolarGrid *Vrad, *Vtheta;
      real deltaT;
@@ -572,10 +572,10 @@ int ConditionCFL (Vrad, Vtheta, deltaT)
 	  jdeb = j;
 	  itdbg1 = 1.0/invdt1; itdbg2=1.0/invdt2; itdbg3=1.0/invdt3; itdbg4=1.0/invdt4;
 	  mdtdbg = newdt;
-	  viscr = dxrad/dvr/4.0/CVNR/CVNR;     
+	  viscr = dxrad/dvr/4.0/CVNR/CVNR;
 	  visct = dxtheta/dvt/4.0/CVNR/CVNR;
 	}
-      }  
+      }
     }
   }
   for (i = Zero_or_active; i < MaxMO_or_active; i++) {
@@ -619,10 +619,12 @@ void ComputeSoundSpeed (Rho, Energy)
     for ( j = 0; j < ns; j++ ) {
       l = i*ns + j;
       if (!Adiabatic)
-	cs[l] = AspectRatio(Rmed[i])*sqrt(G*1.0/Rmed[i])*pow(Rmed[i], FLARINGINDEX);
+//	cs[l] = AspectRatio(Rmed[i])*sqrt(G*1.0/Rmed[i])*pow(Rmed[i], FLARINGINDEX);
+        cs[l] = sqrt(temp_func(Rmed[i]));
 //        cs[l] = sqrt(POLYK*dens[l]); // AMD 7/17/15, Polytrope with gamma = 2 cs^2 = K dens^(gamma-1)
       else
-	cs[l] = sqrt( ADIABATICINDEX*(ADIABATICINDEX-1.0)*energ[l]/dens[l] );
+//        cs[l] = sqrt(temp_func(Rmed[i]))
+	       cs[l] = sqrt( ADIABATICINDEX*(ADIABATICINDEX-1.0)*energ[l]/dens[l] );
     }
   }
 }
@@ -645,7 +647,7 @@ void ComputePressureField (Rho, Energy)
       l = i*ns + j;
       if (!Adiabatic) {
 	pres[l] = dens[l]*cs[l]*cs[l]; /* since SoundSpeed is not updated */
-                                       /* from initialization, cs remains */ 
+                                       /* from initialization, cs remains */
                                        /* axisymmetric */
       }
       else
@@ -692,7 +694,7 @@ real CircumPlanetaryMass (Rho, sys)
   ypl = sys->y[0];
   mdcplocal = 0.0;
   mdcptotal = 0.0;
-  if (FakeSequential && (CPU_Rank > 0)) 
+  if (FakeSequential && (CPU_Rank > 0))
     MPI_Recv (&mdcplocal, 1, MPI_DOUBLE, CPU_Rank-1, 0, MPI_COMM_WORLD, &stat);
   for ( i = Zero_or_active; i < Max_or_active; i++ ) {
     for ( j = 0; j < ns; j++ ) {
