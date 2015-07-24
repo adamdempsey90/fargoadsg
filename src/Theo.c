@@ -1,9 +1,9 @@
 #include "mp.h"
 
-#define POWERPROF
+//#define POWERPROF
 //#define GAUSSPROF
 //#define TAPERPROF
-//#define MKLINPROF
+#define MKLINPROF
 //#define LAUGHLINPROF
 
 extern real ScalingFactor;
@@ -29,14 +29,14 @@ const static real R2 = 2;
 #define s_p  (1 + FLARINGINDEX)
 #define delta1 (delta_R * h_p * pow(R1,FLARINGINDEX + 1))
 #define  delta2  (delta_R * h_p * pow(R2,FLARINGINDEX + 1))
-real sech(r);
-real bump_function(r);
-real f1_func(r);
-real drf1_func(r);
-real d2rf1_func(r);
-real f2_func(r);
-real drf2_func(r);
-real d2rf2_func(r);
+real sech ();
+real bump_function ();
+real f1_func ();
+real drf1_func ();
+real d2rf1_func ();
+real f2_func ();
+real drf2_func ();
+real d2rf2_func ();
 #endif
 
 #ifdef LAUGHLINPROF
@@ -186,7 +186,7 @@ real temp_func(r)
 {
   real res = ASPECTRATIO*ASPECTRATIO*pow(r, 2.0*FLARINGINDEX - 1.0);
 #ifdef LAUGHLINPROF
-   res =  0.74528*SIGMA0*FLARINGINDEX*pow(sigma_func(x),FLARINGINDEX-1);
+   res =  0.74528*SIGMA0*FLARINGINDEX*pow(Sigma(r),FLARINGINDEX-1);
 #endif
 }
 
@@ -195,7 +195,7 @@ real dlogtemp_func(r)
 {
   real res = 2*FLARINGINDEX - 1;
 #ifdef LAUGHLINPROF
-  res = (FLARINGINDEX - 1)*dlogsigma_func(x);
+  res = (FLARINGINDEX - 1)*dlogsigma_func(r);
 #endif
   return res;
 }
@@ -204,7 +204,7 @@ real d2logtemp_func(r)
 {
   real res = 0;
 #ifdef LAUGHLINPROF
-  res = (FLARINGINDEX - 1)*d2logsigma_func(x);
+  res = (FLARINGINDEX - 1)*d2logsigma_func(r);
 #endif
   return res;
 }
@@ -220,7 +220,7 @@ real Energy(r)
     prs_exit (1);
   }
   else
-    energy0 = R/MU/(ADIABATICINDEX-1.0)*Sigma(r) temp_func(r); //*pow(ASPECTRATIO,2.0)*pow(r,-1.0+2.0*FLARINGINDEX);
+    energy0 = R/MU/(ADIABATICINDEX-1.0)*Sigma(r)*temp_func(r); //*pow(ASPECTRATIO,2.0)*pow(r,-1.0+2.0*FLARINGINDEX);
   return energy0;
 }
 
@@ -311,7 +311,7 @@ void AddUserIC (Rho, Vr, Vt, Energy)
   return;
 }
 
-#ifdef MKLIN
+#ifdef MKLINPROF
 
 real sech(r)
   real r;
