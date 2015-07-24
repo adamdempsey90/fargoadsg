@@ -4,13 +4,13 @@ AspectRatio     	0.05            Thickness over Radius in the disk
 Sigma0			0.0095		Surface Density at r=1
 AlphaViscosity		0		Uniform kinematic viscosity
 SigmaSlope		1.5		Slope of surface density profile
-FlaringIndex		0.25		Slope of Temperature/radius profile
+FlaringIndex		0.1		Slope of Temperature/radius profile
 SelfGravity		Yes		choose: Yes, Z or No
-Adiabatic		Yes		choose No for an isothermal eq. of state
+Adiabatic		No		choose No for an isothermal eq. of state
 AdiabaticIndex		2.0		Default value: 1.4	
 Cooling			No		choose: Yes or No
 CoolingTime0		62.5		Cooling time at r=1
-
+Qout			2.0		Q at outer edge, only used for MKLIN
 ### Planet parameters
 
 PlanetConfig		in/zero.cfg
@@ -31,8 +31,8 @@ IndirectTerm		Yes
 
 Nrad			512		Radial number of zones
 Nsec			512		Azimuthal number of zones (sectors)
-Rmin			.1		Inner boundary radius
-Rmax			4.0		Outer boundary radius
+Rmin			.4		Inner boundary radius
+Rmax			10.0		Outer boundary radius
 RadialSpacing 		L		Zone interfaces evenly spaced
 
 ### Output control parameters
@@ -40,4 +40,4 @@ RadialSpacing 		L		Zone interfaces evenly spaced
 Ntot			4000		Total number of time steps
 Ninterm	 		5		Time steps between outputs
 DT			0.314159265359	Time step length. 2PI = 1 orbit
-OutputDir		out_lk/
+OutputDir		out_mklin/

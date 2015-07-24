@@ -69,7 +69,7 @@ real Sigma(r)
 #endif
 
 #ifdef MKLINPROF
-  real sigfac = h_p /(2 * M_PI * bump_function(2.0)); // Qout = 2.0
+  real sigfac = h_p /(2 * M_PI * bump_function(QOUT)); // Qout = 2.0
   res = sigfac * bump_function(r) * pow(r,-s_p);
 #endif
 
