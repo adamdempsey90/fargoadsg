@@ -1,0 +1,33 @@
+#!/bin/bash
+## This line is a comment, the following lines are for Moab
+#MOAB -l nodes=1
+#MOAB -l walltime=8:00:00
+#MOAB -N mov
+#MOAB -j oe
+
+#MSUB -l advres=b1002
+#MSUB -A b1002
+
+##### These are shell commands. Note that all MSUB commands come first.
+
+
+cd $PBS_O_WORKDIR
+module load python/Canopy 
+
+
+ulimit -s unlimited
+
+## First argument is directory name
+## second argument is quantity to plot, see fargo class plot method for values
+## third argument is number of files to load
+## fourth argument is total number of dumps
+## fifth argument is output directory in first argument directory
+## sixth argument is extension, defaults to png if not given
+
+python ppmovie.py out_lk all 800 800 imgs
+cd out_lk/
+pwd
+tar cvzf imgs_all.tar.gz imgs/*
+ 
+##python fourier_analysis.py 'out_sg_noind/' 921 50
+##python fourier_analysis.py 'out_sg_test_hi/' 403 50

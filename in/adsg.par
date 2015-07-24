@@ -1,0 +1,43 @@
+### Disk parameters
+
+AspectRatio     	0.05            Thickness over Radius in the disk
+Sigma0			0.0095		Surface Density at r=1
+AlphaViscosity		0		Uniform kinematic viscosity
+SigmaSlope		1.5		Slope of surface density profile
+FlaringIndex		0.25		Slope of Temperature/radius profile
+SelfGravity		Yes		choose: Yes, Z or No
+Adiabatic		Yes		choose No for an isothermal eq. of state
+AdiabaticIndex		2.0		Default value: 1.4	
+Cooling			No		choose: Yes or No
+CoolingTime0		62.5		Cooling time at r=1
+
+### Planet parameters
+
+PlanetConfig		in/zero.cfg
+ForcedCircular		No
+Eccentricity		0.0		
+ThicknessSmoothing 	0.03		Softening parameters in disk thickness
+
+### Numerical method parameters
+
+Transport		FARGO
+InnerBoundary		RIGID	Can also be OPEN, RIGID or NONREFLECTING
+Disk			YES
+OmegaFrame     		0.0
+Frame			F
+IndirectTerm		Yes
+
+### Mesh parameters
+
+Nrad			512		Radial number of zones
+Nsec			512		Azimuthal number of zones (sectors)
+Rmin			.1		Inner boundary radius
+Rmax			4.0		Outer boundary radius
+RadialSpacing 		L		Zone interfaces evenly spaced
+
+### Output control parameters
+
+Ntot			4000		Total number of time steps
+Ninterm	 		5		Time steps between outputs
+DT			0.314159265359	Time step length. 2PI = 1 orbit
+OutputDir		out_lk/

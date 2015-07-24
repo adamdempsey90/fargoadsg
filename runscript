@@ -1,0 +1,23 @@
+#!/bin/bash
+## This line is a comment, the following lines are for Moab
+#MOAB -l nodes=2:ppn=20
+#MOAB -l walltime=138:00:00
+#MOAB -N fargo_lk
+#MOAB -j oe
+
+#MSUB -l advres=b1002
+#MSUB -A b1002
+
+##### These are shell commands. Note that all MSUB commands come first.
+
+
+cd $PBS_O_WORKDIR
+module load gcc 
+module load python/Canopy 
+module load mpi
+
+ulimit -s unlimited
+
+
+
+mpirun -np 40 fargo -am in/adsg.par
