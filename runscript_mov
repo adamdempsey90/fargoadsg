@@ -1,6 +1,6 @@
 #!/bin/bash
 ## This line is a comment, the following lines are for Moab
-#MOAB -l nodes=1
+#MOAB -l nodes=1:ppn=20
 #MOAB -l walltime=8:00:00
 #MOAB -N mov
 #MOAB -j oe
@@ -24,8 +24,8 @@ ulimit -s unlimited
 ## fifth argument is output directory in first argument directory
 ## sixth argument is extension, defaults to png if not given
 
-python ppmovie.py out_lk all 800 800 imgs
-cd out_lk/
+python ppmovie.py out_mklin2 all 590 590 imgs
+cd out_mklin2/
 pwd
 tar cvzf imgs_all.tar.gz imgs/*
  

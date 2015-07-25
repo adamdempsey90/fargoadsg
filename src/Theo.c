@@ -1,5 +1,5 @@
 #include "mp.h"
-
+#include <complex.h>
 //#define POWERPROF
 //#define GAUSSPROF
 //#define TAPERPROF
@@ -304,7 +304,7 @@ void AddUserIC (Rho, Vr, Vt, Energy)
     for (j = 0; j < ns; j++) {
       l = j+i*ns;
   //    dens[l] += infsig*initAmp*cos(2*M_PI*j/ns); // m=1 perturbation
-      dens[l] = dens[l]*(1 + cos(INITM*2*M_PI*j/( (float)ns))*INITAMP * (2*(real)rand()/(real)(RAND_MAX) - 1)); // random noise
+      dens[l] = dens[l]*(1 + creal(cexp(I*INITM*2*M_PI*j/( (float)ns))*INITAMP * (2*(real)rand()/(real)(RAND_MAX) - 1))); // random noise
       if (dens[l] < 0)	printf("Error Sigma < 0, CPU: %d,\t(%g,%g,%g)\n",CPU_Rank,Rmed[i],2*M_PI*j/ns,dens[l]);
     }
   }
