@@ -82,6 +82,11 @@ class fargo():
 		self.Tbar = tile((self.mtemp[:,0].real).reshape(self.nrad,1),(1,self.nphi))
 		self.vortbar = tile((self.mvort[:,0].real).reshape(self.nrad,1),(1,self.nphi))
 		self.vortensbar = tile((self.mvortens[:,0].real).reshape(self.nrad,1),(1,self.nphi))
+		
+		self.power = zeros(self.mrho.shape[1])
+		for i in range(self.mrho.shape[1]):
+			self.power[i] = (conj(self.mrho[:,i])*self.mrho[:,i]).sum()
+			
 
 	def vortencity(self):
  		_,dpvr=gradient(self.vr,self.dlr,self.dphi)
@@ -94,7 +99,7 @@ class fargo():
 			fig,((axs,axt),(axvr,axvp))=subplots(2,2,sharex='col',sharey='row',figsize=(9,7),dpi=100)
 			axs.set_title('$\log_{10} \Sigma$')
 			if self.iso:
-				axt.set_title('$ \\frac{\\nabla \\times v}{\\Sigma} $')
+				axt.set_title('$ \\log_{10}\\left|\\frac{\\nabla \\times v}{\\Sigma}\\right| $')
 			else:
 				axt.set_title('$ T $')
 			axvr.set_title('$v_r$')
@@ -102,7 +107,7 @@ class fargo():
 
 			ps=axs.pcolormesh(self.x,self.y,log10(self.rho))
 			if self.iso:
-				pt=axt.pcolormesh(self.x,self.y,self.vortens)
+				pt=axt.pcolormesh(self.x,self.y,log10(abs(self.vortens)))
 			else:
 				pt=axt.pcolormesh(self.x,self.y,self.temp)
 			pr=axvr.pcolormesh(self.x,self.y,self.vr)
@@ -253,11 +258,17 @@ class fargo():
 			if rmax != None:
 				xlim((-rmax,rmax))
 				ylim((-rmax,rmax))	
+		if q=='power':
+			figure()
+			semilogy(self.power[:10]/self.power[0],'-s')
+			ylabel('$\\left| \\frac{\\Sigma_m}{\\bar{\\Sigma}} \\right|^2$',fontsize=20)
+			xlabel('m',fontsize=20)
 		if output:
 			if q=='all':
 				fig.savefig(fname)
 			else:
 				savefig(fname)
+		
 	def plotmode(self,m):
 		fig,((axs,axt),(axvr,axvp))=subplots(2,2,sharex='col')
 	
@@ -359,4 +370,21 @@ def animate(trange,q,logy=False,rmax=None,iso=False):
 
 	show()
 	return
+
+def modesplot(rout,maxmode,plotzero=False,showlegend=True):
+	dat=loadtxt('modehistory.dat')
+	pout = 2*pi*rout**(1.5)
+	t = dat[:,0]/pout
+	dat= dat[:,1:]
+	figure();
+	if plotzero:
+		loglog(t,dat[:,0],label='m=0')
+
+	for m in range(1,maxmode+1):
+		loglog(t,dat[:,m],label='m=%d'%m)
+	
+	xlabel('t (outer period)',fontsize=20)
+	ylabel('$|A_m|$',fontsize=20)
+	if showlegend:
+		legend(loc='best')
 

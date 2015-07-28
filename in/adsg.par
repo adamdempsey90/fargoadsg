@@ -1,10 +1,10 @@
 ### Disk parameters
 
 AspectRatio     	0.05            Thickness over Radius in the disk
-Sigma0			0.0095		Surface Density at r=1
-AlphaViscosity		0.001		Uniform kinematic viscosity
+Sigma0			0.0125		Surface Density at r=1
+AlphaViscosity		0.0		Uniform kinematic viscosity
 SigmaSlope		1.5		Slope of surface density profile
-FlaringIndex		0.1		Slope of Temperature/radius profile
+FlaringIndex		0.25		Slope of Temperature/radius profile
 SelfGravity		Yes		choose: Yes, Z or No
 Adiabatic		No		choose No for an isothermal eq. of state
 AdiabaticIndex		2.0		Default value: 1.4	
@@ -12,7 +12,7 @@ Cooling			No		choose: Yes or No
 CoolingTime0		62.5		Cooling time at r=1
 Qout			2.0		Q at outer edge, only used for MKLIN
 InitAmp			0.0001		Amplitude of noise added to i.c
-Initm			1		Initial m of the noise, defaults to 0
+Initm			0		Initial m of the noise, defaults to 0
 ### Planet parameters
 
 PlanetConfig		in/zero.cfg
@@ -33,7 +33,7 @@ IndirectTerm		Yes
 
 Nrad			512		Radial number of zones
 Nsec			512		Azimuthal number of zones (sectors)
-Rmin			.4		Inner boundary radius
+Rmin			.1		Inner boundary radius
 Rmax			10.0		Outer boundary radius
 RadialSpacing 		L		Zone interfaces evenly spaced
 
@@ -42,4 +42,4 @@ RadialSpacing 		L		Zone interfaces evenly spaced
 Ntot			75000		Total number of time steps
 Ninterm	 		75		Time steps between outputs
 DT			0.314159265359	Time step length. 2PI = 1 orbit
-OutputDir		out_mklin3/
+OutputDir		out_taper/

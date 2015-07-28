@@ -2,7 +2,7 @@
 ## This line is a comment, the following lines are for Moab
 #MOAB -l nodes=2:ppn=20
 #MOAB -l walltime=138:00:00
-#MOAB -N fargo_lin
+#MOAB -N fargo_taper
 #MOAB -j oe
 
 #MSUB -l advres=b1002

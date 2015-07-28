@@ -2,8 +2,8 @@
 #include <complex.h>
 //#define POWERPROF
 //#define GAUSSPROF
-//#define TAPERPROF
-#define MKLINPROF
+#define TAPERPROF
+//#define MKLINPROF
 //#define LAUGHLINPROF
 
 extern real ScalingFactor;
@@ -16,7 +16,7 @@ static const real pwidth1 = .05;
 
 #ifdef TAPERPROF
 static const real inner_slope = 3;
-static const real rmax1 = 1;
+static const real rmax1 = .5;
 #endif
 
 #ifdef MKLINPROF
@@ -40,8 +40,8 @@ real d2rf2_func ();
 #endif
 
 #ifdef LAUGHLINPROF
-const real dens_width2 = .1;
-const real dens_peak_rad = .3;
+const real dens_width2 = .05;
+const real dens_peak_rad = .45;
 #endif
 
 /* Surface density */

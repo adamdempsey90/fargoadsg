@@ -24,8 +24,8 @@ ulimit -s unlimited
 ## fifth argument is output directory in first argument directory
 ## sixth argument is extension, defaults to png if not given
 
-python ppmovie.py out_mklin2 all 590 590 imgs
-cd out_mklin2/
+python ppmovie.py out_taper all 760 760 imgs
+cd out_taper/
 pwd
 tar cvzf imgs_all.tar.gz imgs/*
  

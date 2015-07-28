@@ -19,6 +19,6 @@ ulimit -s unlimited
 
 
 
-python fourier_analysis.py 'out_mklin2/' 590 50 
+python fourier_analysis.py 'out_taper/' 766 50 
 ##python fourier_analysis.py 'out_sg_noind/' 921 50
 ##python fourier_analysis.py 'out_sg_test_hi/' 403 50
